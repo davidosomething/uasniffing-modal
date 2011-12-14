@@ -1,0 +1,42 @@
+<!doctype>
+<html>
+  <head>
+    <title>Mobile modal test page</title>
+    <link rel="stylesheet" href="modal.css" type="text/css" />
+    <style>
+      body { font: 16px/1.48 Sans-serif; width: 600px; margin: 1% auto; }
+    </style>
+  </head>
+  <body>
+    <h1>Mobile modal test page</h1>
+
+    <h2>Description of functionality</h2>
+    <p>The included <var>modal.js</var> file does the following:</p>
+    <ol>
+      <li>Sniffs the User Agent string for the presence of key mobile words like <samp>android</samp>, <samp>iPhone</samp>, <samp>ipad</samp>, etc.</li>
+      <li>Reads the domain's cookie file for the <var>isMobileSurveyDone</var> variable.</li>
+      <li>If the cookie is string "false" or not set, the script injects the HTML for the modal into the page.</li>
+      <li>Clicking the link to take the survey or the "No, thanks" link will set a cookie to never show the popup again.</li>
+      <li>Clicking the "Take it later" link will only hide the popup, it'll reappear next page load.</li>
+    </ol>
+
+    <h2>Installation</h2>
+    <ol>
+      <li>Add the CSS to the page. It can be appended to the main stylesheet or <code>&lt;link&gt;</code>ed as a new stylesheet in the <code>&lt;head&gt;</code></li>
+      <li>jQuery is required. Add it to the page.</li>
+      <li>Add the <var>modal.js</var> file to the pages you want the modal to appear on.</li>
+    </ol>
+    <p>To uninstall, just remove the stylesheet and <var>modal.js</var> file.</p>
+    <p>View this page's source to see how to use the public methods.</p>
+
+    <h2>Debugging</h2>
+    <p>
+      <a href="#" onclick="mobileSurveyModal.show()">Click here to reopen popup.</a><br /><br />
+      <a href="#" onclick="mobileSurveyModal.undo()">Click here to clear the cookie.</a>
+    </p>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>mobileSurveyDebug = false;</script>
+    <script src="modal.js"></script>
+  </body>
+</html>
