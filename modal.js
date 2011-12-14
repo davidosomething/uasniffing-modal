@@ -1,34 +1,28 @@
 var mobileSurveyModal = (function() {
   var m = this;
-  var debug = window.mobileSurveyDebug;
-
-  this.isMobile = false;
 
   // detect mobile browsers, case insensitive
-  this.detectMobile = function() {
+  this.isMobile = function() {
     if (navigator.userAgent.match(/Android/i)
      || navigator.userAgent.match(/webOS/i)
      || navigator.userAgent.match(/iPhone|iPod|iPad/i)
      || navigator.userAgent.match(/Blackberry|Rim|WebOS/i)
      || navigator.userAgent.match(/mobile/i) // misc mobile including IEMobile
     ) { // is mobile UA
-      m.isMobile = true;
+      return true;
     }
+    return false;
   };
+
+  this.isMobileSurveyDone = function() {
+    var cookieValue = document.cookie.match('(^|;) ?isMobileSurveyDone=([^;]*)(;|$)');
+    return cookieValue && (cookieValue[2] == 1) ? true : false;
+  }
 
   // read survey cookie, show survey
   this.show = function() {
-    var cookieValue = document.cookie.match('(^|;) ?isMobileSurveyDone=([^;]*)(;|$)');
-    var isMobileSurveyDone = cookieValue ? unescape(cookieValue[2]) : false;
-    var isOpen = $('#mobile_survey_modal').length;
-
-    if (debug) {
-      console.log('isMobile? ' + m.isMobile);
-      console.log('isMobileSurveyDone? ' + isMobileSurveyDone);
-      console.log('isOpen? ' + isOpen);
-    }
-
-    if (isMobileSurveyDone == 1 || !m.isMobile || isOpen) return; // already done, not mobile, or already open
+    if ($('#mobile_survey_modal').length) return;
+    if (window.mobileSurveyDebug) m.debug();
 
     var modalHtml = '';
     modalHtml += '<div id="mobile_survey_modal">';
@@ -53,15 +47,17 @@ var mobileSurveyModal = (function() {
     document.cookie = 'isMobileSurveyDone=0'; // unexpiring cookie
   };
 
+  this.debug = function() {
+    console.log('isMobile? ' + m.isMobile());
+    console.log('isMobileSurveyDone? ' + m.isMobileSurveyDone());
+  };
+
   this.init = function() {
     $('body').on('click', '#mobile_survey_modal-take, #mobile_survey_modal-never', m.done);
     $('body').on('click', '#mobile_survey_modal-later', m.hide);
-    m.detectMobile();
-    m.show();
+    if (window.mobileSurveyDebug || (!m.isMobileSurveyDone() && m.isMobile())) m.show();
   }
 
   return this;
 
 }).call({});
-
-$(mobileSurveyModal.init);

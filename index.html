@@ -1,14 +1,27 @@
 <!doctype>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
     <title>Mobile modal test page</title>
     <link rel="stylesheet" href="modal.css" type="text/css" />
     <style>
-      body { font: 16px/1.48 Sans-serif; width: 600px; margin: 1% auto; }
+      html { overflow-x: hidden; }
+      body { background: #fff; font: 16px/1.48 Sans-serif; color: #444; width: 480px; margin: 1% auto; }
+      pre { background: #ffe; color: #433; font-size: 11px; padding: 1em; border: 1px #ddc solid; border-radius: 0.5em 0 0.5em 0; }
     </style>
   </head>
   <body>
     <h1>Mobile modal test page</h1>
+
+    <h2>Debugging</h2>
+    <p>
+      <a href="#" onclick="mobileSurveyModal.show()">Click here to reopen popup.</a><br /><br />
+      <a href="#" onclick="mobileSurveyModal.undo()">Click here to clear the cookie.</a><br /><br />
+      <a href="#" onclick="toggleDebugging()">Click here to toggle debugging.</a><br /><br />
+      <span id="debugging"></span>
+    </p>
 
     <h2>Description of functionality</h2>
     <p>The included <var>modal.js</var> file does the following:</p>
@@ -25,18 +38,22 @@
       <li>Add the CSS to the page. It can be appended to the main stylesheet or <code>&lt;link&gt;</code>ed as a new stylesheet in the <code>&lt;head&gt;</code></li>
       <li>jQuery is required. Add it to the page.</li>
       <li>Add the <var>modal.js</var> file to the pages you want the modal to appear on.</li>
+      <li>Run the init function on document ready:<pre><code>$(mobileSurveyModal.init);</code></pre></li>
     </ol>
     <p>To uninstall, just remove the stylesheet and <var>modal.js</var> file.</p>
     <p>View this page's source to see how to use the public methods.</p>
-
-    <h2>Debugging</h2>
-    <p>
-      <a href="#" onclick="mobileSurveyModal.show()">Click here to reopen popup.</a><br /><br />
-      <a href="#" onclick="mobileSurveyModal.undo()">Click here to clear the cookie.</a>
-    </p>
+    <p>Set the window variable <var>mobileSurveyDebug</var> to true to enable debugging to the console (and mobile spoofing).</p>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script>mobileSurveyDebug = false;</script>
     <script src="modal.js"></script>
+    <script>
+      function toggleDebugging() {
+        window.mobileSurveyDebug = !window.mobileSurveyDebug;
+        $('#debugging').text('debugging is ' + (window.mobileSurveyDebug ? 'ON' : 'OFF'));
+      }
+      if (!mobileSurveyModal.isMobile()) window.mobileSurveyDebug = true; // debugging on in browser
+      $(function() { if (window.mobileSurveyDebug) $('#debugging').text('debugging is ON'); });
+      $(mobileSurveyModal.init);
+    </script>
   </body>
 </html>
