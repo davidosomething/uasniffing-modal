@@ -26,10 +26,9 @@ var mobileSurveyModal = (function() {
 
     var modalHtml = '';
     modalHtml += '<div id="mobile_survey_modal">';
-    modalHtml += '<p>Please help us by taking a brief survey about this mobile site.</p>';
-    modalHtml += '<a href="http://surveyanalytics.com/t/ADVheZMTb8" target="_blank" id="mobile_survey_modal-take">Click here to take the survey.</a>';
-    modalHtml += '<a target="_blank" id="mobile_survey_modal-later">Take it later</a>';
-    modalHtml += '<a target="_blank" id="mobile_survey_modal-never">No, thanks</a>';
+    modalHtml += '<p>Would you be willing to answer 3 questions?</p>';
+    modalHtml += '<a href="http://surveyanalytics.com/t/ADVheZMTb8" target="_blank" id="mobile_survey_modal-yes">Yes</a>';
+    modalHtml += '<a target="_blank" id="mobile_survey_modal-no">No</a>';
     modalHtml += '</div>';
     $(modalHtml).appendTo('body');
   };
@@ -53,8 +52,7 @@ var mobileSurveyModal = (function() {
   };
 
   this.init = function() {
-    $('body').on('click', '#mobile_survey_modal-take, #mobile_survey_modal-never', m.done);
-    $('body').on('click', '#mobile_survey_modal-later', m.hide);
+    $('body').on('click', '#mobile_survey_modal-yes, #mobile_survey_modal-no', m.done);
     if (window.mobileSurveyDebug || (!m.isMobileSurveyDone() && m.isMobile())) m.show();
   }
 

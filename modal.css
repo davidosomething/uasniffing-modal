@@ -4,55 +4,36 @@
  */
 
 #mobile_survey_modal {
-  background: #fafafa;
-  border: 1px #999 solid;
-  border-radius: 4px;
-  box-shadow: 2px 2px 2px 0 #666;
-  color: #555;
-  font: 12px/1.4 Sans-serif;
+  background: #f8ecab;
+  border: 15px #fff solid;
+  color: #212121;
+  font: 18px/1.1 Georgia, serif;
   left: 0;
   margin: 0 auto;
   overflow: hidden;
-  padding: 10px;
+  padding: 6px 10px 16px;
   position: absolute;
   right: 0;
   text-align: center;
   top: 10%;
-  width: 240px;
+  width: 190px;
 }
 #mobile_survey_modal p {
+  background: url(oslogo.png) no-repeat center top;
+  padding-top: 87px;
   margin: 0 0 1em;
 }
 #mobile_survey_modal a {
+  background: url(modal-button.jpg) no-repeat;
+  color: #212121;
   cursor: pointer;
   display: block;
-}
-
-#mobile_survey_modal-take {
-  background: #faa51a;
-  background: -webkit-gradient(linear, left top, left bottom,  from(#faa51a),           to(#f47a20));
-  background: -moz-linear-gradient(top,                             #faa51a,               #f47a20);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
-  border: 1px #666 solid;
-  border-radius: 4px;
-  color: #fff;
-  margin: 30px 10px 10px;
-  outline: none;
-  padding: 10px;
-  text-align: center;
+  height: 49px;
+  float: left;
+  font: bold italic 22px/1 Georgia, serif;
+  line-height: 46px;
+  margin-left: 10px;
   text-decoration: none;
-  text-shadow: 0 1px 1px rgba(0,0,0,.3);
-     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  width: 80px;
 }
-
-#mobile_survey_modal-later,
-#mobile_survey_modal-never {
-  text-decoration: underline;
-  font-size: 10px;
-  padding: 10px;
-}
-
-#mobile_survey_modal-later { float: left; }
-#mobile_survey_modal-never { float: right; }
+#mobile_survey_modal-no { float: right; margin: 0; }
