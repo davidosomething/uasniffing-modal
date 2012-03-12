@@ -1,4 +1,4 @@
-<!doctype>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -21,8 +21,8 @@
 
     <h2>Debugging</h2>
     <p>
-      <a href="#" onclick="mobileSurveyModal.show()">Click here to reopen popup.</a><br /><br />
-      <a href="#" onclick="mobileSurveyModal.undo()">Click here to clear the cookie.</a><br /><br />
+      <a href="#" onclick="surveyModal.show()">Click here to reopen popup.</a><br /><br />
+      <a href="#" onclick="surveyModal.undo()">Click here to clear the cookie.</a><br /><br />
       <a href="#" onclick="toggleDebugging()">Click here to toggle debugging.</a><br /><br />
       <span id="debugging"></span>
     </p>
@@ -47,7 +47,6 @@
     </ol>
     <p>To uninstall, just remove the stylesheet and <var>modal.js</var> file.</p>
     <p>View this page's source to see how to use the public methods.</p>
-    <p>Set the window variable <var>mobileSurveyDebug</var> to true to enable debugging to the console (and mobile spoofing).</p>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="modal.js"></script>
@@ -56,9 +55,14 @@
         window.mobileSurveyDebug = !window.mobileSurveyDebug;
         $('#debugging').text('debugging is ' + (window.mobileSurveyDebug ? 'ON' : 'OFF'));
       }
-      if (!mobileSurveyModal.isMobile()) window.mobileSurveyDebug = true; // debugging on in browser
+      if (!surveyModal.isMobile()) window.mobileSurveyDebug = true; // debugging on in browser
       $(function() { if (window.mobileSurveyDebug) $('#debugging').text('debugging is ON'); });
-      $(mobileSurveyModal.init);
+      $(function() {
+        surveyModal.init({
+          debug: true,
+          ab: true
+        });
+      });
     </script>
   </body>
 </html>
