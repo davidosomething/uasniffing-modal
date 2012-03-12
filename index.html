@@ -31,7 +31,7 @@
     <p>The included <var>modal.js</var> file does the following:</p>
     <ol>
       <li>Sniffs the User Agent string for the presence of key mobile words like <samp>android</samp>, <samp>iPhone</samp>, <samp>ipad</samp>, etc.</li>
-      <li>Reads the domain's cookie file for the <var>isMobileSurveyDone</var> variable.</li>
+      <li>Reads the domain's cookie file for the <var>isSurveyDone</var> variable.</li>
       <li>If the cookie is string "false" or not set, the script injects the HTML for the modal into the page.</li>
       <li>Clicking the link to take the survey or the "No, thanks" link will set a cookie to never show the popup again.</li>
       <li>Clicking the "Take it later" link will only hide the popup, it'll reappear next page load.</li>
@@ -51,12 +51,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="modal.js"></script>
     <script>
-      function toggleDebugging() {
-        window.mobileSurveyDebug = !window.mobileSurveyDebug;
-        $('#debugging').text('debugging is ' + (window.mobileSurveyDebug ? 'ON' : 'OFF'));
-      }
-      if (!surveyModal.isMobile()) window.mobileSurveyDebug = true; // debugging on in browser
-      $(function() { if (window.mobileSurveyDebug) $('#debugging').text('debugging is ON'); });
       $(function() {
         surveyModal.init({
           debug: true,

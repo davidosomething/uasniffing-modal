@@ -35,8 +35,8 @@ var surveyModal = (function () {
     return false;
   };
 
-  this.isMobileSurveyDone = function () {
-    var cookieValue = document.cookie.match('(^|;) ?isMobileSurveyDone=([^;]*)(;|$)');
+  this.isSurveyDone = function () {
+    var cookieValue = document.cookie.match('(^|;) ?isSurveyDone=([^;]*)(;|$)');
     return cookieValue && (cookieValue[2] == 1) ? true : false;
   };
 
@@ -51,7 +51,11 @@ var surveyModal = (function () {
     modalHtml += '<div id="mobile_survey_modal">';
     modalHtml += '<p>Would you be willing to answer 3 questions?</p>';
     modalHtml += '<a href="http://surveyanalytics.com/t/ADVheZMTb8" target="_blank" id="mobile_survey_modal-yes">Yes</a>';
-    modalHtml += '<a target="_blank" id="mobile_survey_modal-no">No</a>';
+    modalHtml += '<a ';
+    if (!m.isMobile()) { // only new window on desktop mode
+      modalHTML += 'target="_blank" ';
+    }
+    modalHtml += 'id="mobile_survey_modal-no">No</a>';
     modalHtml += '</div>';
     $(modalHtml).appendTo('body');
   };
@@ -61,12 +65,12 @@ var surveyModal = (function () {
   };
 
   this.done = function (e) {
-    document.cookie = 'isMobileSurveyDone=1'; // unexpiring cookie
+    document.cookie = 'isSurveyDone=1'; // unexpiring cookie
     m.hide();
   };
 
   this.undo = function (e) {
-    document.cookie = 'isMobileSurveyDone=0'; // unexpiring cookie
+    document.cookie = 'isSurveyDone=0'; // unexpiring cookie
   };
 
   this.debug = function () {
@@ -74,7 +78,7 @@ var surveyModal = (function () {
       return;
     }
     console.log('isMobile? ' + m.isMobile());
-    console.log('isMobileSurveyDone? ' + m.isMobileSurveyDone());
+    console.log('isSurveyDone? ' + m.isSurveyDone());
   };
 
   /**
@@ -95,7 +99,7 @@ var surveyModal = (function () {
       isInSampleGroup = Math.floor(Math.random() * 2);
     }
     if (isInSampleGroup) {
-      if (m.options.debug || (!m.isMobileSurveyDone() && m.isMobile())) {
+      if (m.options.debug || (!m.isSurveyDone() && m.isMobile())) {
         m.show();
       }
     }
