@@ -19,9 +19,9 @@
   width: 190px;
 }
 #mobile_survey_modal p {
-  background: url(oslogo.png) no-repeat center top;
+  background: url(http://placehold.it/150x75) no-repeat center top;
   padding-top: 87px;
-  margin: 0 0 1em;
+  margin: 10px 0;
 }
 #mobile_survey_modal a {
   background: url(modal-button.jpg) no-repeat;

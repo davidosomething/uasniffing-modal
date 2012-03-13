@@ -14,14 +14,20 @@
  * });
  */
 var surveyModal = (function () {
-  var m = this;
+  var m = this; // self reference
 
+  /**
+   * default options
+   */
   this.options = {
     debug: false,
     ab: false
   };
 
-  // detect mobile browsers, case insensitive
+  /**
+   * detect mobile browsers, case insensitive
+   * @return bool true if user agent matches mobile device UA
+   */
   this.isMobile = function () {
     if (navigator.userAgent.match(/Android/i)
      || navigator.userAgent.match(/Kindle/i)
@@ -35,14 +41,31 @@ var surveyModal = (function () {
     return false;
   };
 
+  /**
+   * set cookie so lightbox never pops up again
+   * set when user clicks yes or no
+   */
+  this.done = function (e) {
+    document.cookie = 'isSurveyDone=1'; // unexpiring cookie
+    m.hide();
+  };
+
+  /**
+   * read cookie determining if lightbox should popup
+   * read before opening popup on init
+   * @return bool true if isSurveyDone cookie value is 1
+   */
   this.isSurveyDone = function () {
     var cookieValue = document.cookie.match('(^|;) ?isSurveyDone=([^;]*)(;|$)');
     return cookieValue && (cookieValue[2] == 1) ? true : false;
   };
 
-  // read survey cookie, show survey
+  /**
+   * create and show the popup
+   * can be called at any time
+   */
   this.show = function () {
-    if ($('#mobile_survey_modal').length) {
+    if ($('#mobile_survey_modal').length) { // already open
       return;
     }
     m.debug();
@@ -50,35 +73,39 @@ var surveyModal = (function () {
     var modalHtml = '';
     modalHtml += '<div id="mobile_survey_modal">';
     modalHtml += '<p>Would you be willing to answer 3 questions?</p>';
-    modalHtml += '<a href="http://surveyanalytics.com/t/ADVheZMTb8" target="_blank" id="mobile_survey_modal-yes">Yes</a>';
-    modalHtml += '<a ';
-    if (!m.isMobile()) { // only new window on desktop mode
-      modalHTML += 'target="_blank" ';
+    modalHtml += '<a href="';
+    if (m.isMobile()) { // mobile link open same window
+      modalHtml += 'http://surveyanalytics.com/t/ADVheZM9Bc" onclick="_gaq.push([\'_link\', \'http://surveyanalytics.com/t/ADVheZM9Bc\']); return false;"';
     }
-    modalHtml += 'id="mobile_survey_modal-no">No</a>';
+    else { // desktop link, open new window
+      modalHtml += 'http://surveyanalytics.com/t/ADVheZMTb8" target="_blank" onclick="_gaq.push([\'_link\', \'http://surveyanalytics.com/t/ADVheZMTb8\']); return false;"';
+    }
+    modalHtml += 'id="mobile_survey_modal-yes">Yes</a>';
+    modalHtml += '<a id="mobile_survey_modal-no">No</a>';
     modalHtml += '</div>';
     $(modalHtml).appendTo('body');
   };
 
+  /**
+   * completely remove popup from DOM
+   */
   this.hide = function (e) {
     $('#mobile_survey_modal').remove();
   };
 
-  this.done = function (e) {
-    document.cookie = 'isSurveyDone=1'; // unexpiring cookie
-    m.hide();
-  };
-
-  this.undo = function (e) {
-    document.cookie = 'isSurveyDone=0'; // unexpiring cookie
-  };
-
+  // show mobile detection status and lightbox cookie
   this.debug = function () {
     if (!m.options.debug) {
       return;
     }
     console.log('isMobile? ' + m.isMobile());
     console.log('isSurveyDone? ' + m.isSurveyDone());
+  };
+
+  // debugging method to unset cookie
+  this.undo = function (e) {
+    document.cookie = 'isSurveyDone=0'; // unexpiring cookie
+    m.debug();
   };
 
   /**
@@ -90,10 +117,14 @@ var surveyModal = (function () {
     if (arguments.length) {
       m.options = arguments[0];
     }
-    if (m.options.debug) {
+    if (m.options.debug) { // show options
       console.log(m.options);
     }
+
+    // set cookie after click yes or no, so popup only appears once ever
     $('body').on('click', '#mobile_survey_modal-yes, #mobile_survey_modal-no', m.done);
+
+    // determine sample group, show if in 50%
     var isInSampleGroup = true;
     if (m.options.ab) {
       isInSampleGroup = Math.floor(Math.random() * 2);
@@ -110,6 +141,7 @@ var surveyModal = (function () {
     }
   }
 
+  // expose methods
   return this;
 
 }).call({});
