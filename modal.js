@@ -65,13 +65,17 @@ var surveyModal = (function () {
    * can be called at any time
    */
   this.show = function () {
-    if ($('#mobile_survey_modal').length) { // already open
+    if ($('#survey_modal').length) { // already open
       return;
     }
     m.debug();
 
     var modalHtml = '';
-    modalHtml += '<div id="mobile_survey_modal">';
+    modalHtml += '<div id="survey_modal"';
+    if (m.isMobile()) {
+      modalHtml += ' class="mobile"';
+    }
+    modalHtml += '>';
     modalHtml += '<p>Would you be willing to answer 3 questions?</p>';
     modalHtml += '<a href="';
     if (m.isMobile()) { // mobile link open same window
@@ -80,8 +84,8 @@ var surveyModal = (function () {
     else { // desktop link, open new window
       modalHtml += 'http://surveyanalytics.com/t/ADVheZMTb8" target="_blank" onclick="_gaq.push([\'_link\', \'http://surveyanalytics.com/t/ADVheZMTb8\']); return false;"';
     }
-    modalHtml += 'id="mobile_survey_modal-yes">Yes</a>';
-    modalHtml += '<a id="mobile_survey_modal-no">No</a>';
+    modalHtml += 'id="survey_modal-yes">Yes</a>';
+    modalHtml += '<a id="survey_modal-no">No</a>';
     modalHtml += '</div>';
     $(modalHtml).appendTo('body');
   };
@@ -90,7 +94,7 @@ var surveyModal = (function () {
    * completely remove popup from DOM
    */
   this.hide = function (e) {
-    $('#mobile_survey_modal').remove();
+    $('#survey_modal').remove();
     m.debug();
   };
 
@@ -123,7 +127,7 @@ var surveyModal = (function () {
     }
 
     // set cookie after click yes or no, so popup only appears once ever
-    $('body').on('click', '#mobile_survey_modal-yes, #mobile_survey_modal-no', m.done);
+    $('body').on('click', '#survey_modal-yes, #survey_modal-no', m.done);
 
     // determine sample group, show if in 50%
     var isInSampleGroup = true;
@@ -131,7 +135,7 @@ var surveyModal = (function () {
       isInSampleGroup = Math.floor(Math.random() * 2);
     }
     if (isInSampleGroup) {
-      if (m.options.debug || (!m.isSurveyDone() && m.isMobile())) {
+      if (m.options.debug || (!m.isSurveyDone())) {
         m.show();
       }
     }

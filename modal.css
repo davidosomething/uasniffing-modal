@@ -3,7 +3,7 @@
  * CSS for the mobile survey modal
  */
 
-#mobile_survey_modal {
+#survey_modal {
   background: #f8ecab;
   border: 15px #fff solid;
   color: #212121;
@@ -18,12 +18,12 @@
   top: 10%;
   width: 190px;
 }
-#mobile_survey_modal p {
+#survey_modal p {
   background: url(http://placehold.it/150x75) no-repeat center top;
   padding-top: 87px;
   margin: 10px 0;
 }
-#mobile_survey_modal a {
+#survey_modal a {
   background: url(modal-button.jpg) no-repeat;
   color: #212121;
   cursor: pointer;
@@ -36,4 +36,4 @@
   text-decoration: none;
   width: 80px;
 }
-#mobile_survey_modal-no { float: right; margin: 0; }
+#survey_modal-no { float: right; margin: 0; }
