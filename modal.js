@@ -91,6 +91,7 @@ var surveyModal = (function () {
    */
   this.hide = function (e) {
     $('#mobile_survey_modal').remove();
+    m.debug();
   };
 
   // show mobile detection status and lightbox cookie

@@ -23,8 +23,6 @@
     <p>
       <a href="#" onclick="surveyModal.show()">Click here to reopen popup.</a><br /><br />
       <a href="#" onclick="surveyModal.undo()">Click here to clear the cookie.</a><br /><br />
-      <a href="#" onclick="toggleDebugging()">Click here to toggle debugging.</a><br /><br />
-      <span id="debugging"></span>
     </p>
 
     <h2>Description of functionality</h2>
@@ -32,7 +30,8 @@
     <ol>
       <li>Sniffs the User Agent string for the presence of key mobile words like <samp>android</samp>, <samp>iPhone</samp>, <samp>ipad</samp>, etc.</li>
       <li>Reads the domain's cookie file for the <var>isSurveyDone</var> variable.</li>
-      <li>If the cookie is string "false" or not set, the script injects the HTML for the modal into the page.</li>
+      <li>Gets random coin toss, 50% of users will see the modal.</li>
+      <li>If the cookie is string "0" or not set, the script injects the HTML for the modal into the page.</li>
       <li>Clicking the link to take the survey or the "No, thanks" link will set a cookie to never show the popup again.</li>
       <li>Clicking the "Take it later" link will only hide the popup, it'll reappear next page load.</li>
     </ol>
@@ -41,12 +40,27 @@
     <p><a href="mobilemodal.zip" target="_blank">Download all files: mobilemodal.zip</a></p>
     <ol>
       <li>Add the CSS to the page. It can be appended to the main stylesheet or <code>&lt;link&gt;</code>ed as a new stylesheet in the <code>&lt;head&gt;</code></li>
-      <li>jQuery is required. Add it to the page.</li>
-      <li>Add the <var>modal.js</var> file to the pages you want the modal to appear on.</li>
-      <li>Run the init function on document ready:<pre><code>$(mobileSurveyModal.init);</code></pre></li>
+      <li>jQuery 1.7.1 is required. Add it to the page before modal.js, it can be in the <code>&lt;head&gt;</code> or at the bottom of the body.</li>
+      <li>Add the <var>modal.js</var> file to the pages you want the modal to appear on. It only has to go after jQuery's <code>&lt;script&gt;</code> tag.</li>
+      <li>Run the init function on document ready:
+        <pre><code contenteditable>$(function() { surveyModal.init({ ab:true }); });</code></pre>
+      </li>
     </ol>
     <p>To uninstall, just remove the stylesheet and <var>modal.js</var> file.</p>
     <p>View this page's source to see how to use the public methods.</p>
+
+    <h2>Options</h2>
+    <p>The init function takes an object for options. You can pass:</p>
+    <dl>
+      <dt>debug</dt><dd>boolean, default: false, true for console.log output</dd>
+      <dt>ab</dt><dd>boolean, default: false, true to only show modal to 50% of users</dd>
+    </dl>
+    <p>Example:</p>
+    <pre><code contenteditable>surveyModal.init({
+  debug: true,
+  ab: true
+});
+</code></pre>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="modal.js"></script>
